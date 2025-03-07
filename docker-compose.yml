@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       - OLLAMA_HOST=http://ollama:11434
       - API_USERNAME=admin
@@ -22,17 +22,17 @@ services:
   ollama:
     image: ollama/ollama:latest
     ports:
-      - "11434:11434"
+      - '11434:11434'
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped
-    entrypoint: ["/bin/ollama"]
-    command: ["serve"]
+    entrypoint: ['/bin/ollama']
+    command: ['serve']
 
   postgres:
     image: postgres:15
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
