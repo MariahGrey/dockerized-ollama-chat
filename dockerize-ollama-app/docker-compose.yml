@@ -1,0 +1,48 @@
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - API_USERNAME=admin
+      - API_PASSWORD=password
+      - NEXT_PUBLIC_API_USERNAME=admin
+      - NEXT_PUBLIC_API_PASSWORD=password
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/ollama_app?schema=public
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=your-super-secret-key-here
+    depends_on:
+      - ollama
+      - postgres
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    entrypoint: ["/bin/ollama"]
+    command: ["serve"]
+
+  postgres:
+    image: postgres:15
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ollama_app
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+    name: ollama_data
+  postgres_data:
+    name: postgres_data
