@@ -113,21 +113,3 @@ docker compose logs db
 # Check application logs
 docker compose logs app
 ```
-
-## Project Structure
-
-.
-├── Dockerfile
-├── compose.yaml
-├── prisma/
-│ ├── schema.prisma
-│ └── migrations/
-├── src/
-│ ├── app/
-│ ├── components/
-│ └── lib/
-└── ...
-
-```
-
-```
