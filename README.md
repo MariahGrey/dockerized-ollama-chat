@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dockerized Ollama Chat
 
-## Getting Started
+A Next.js application that provides a chat interface for Ollama language models, containerized with Docker.
 
-First, run the development server:
+## Prerequisites
+
+- Docker and Docker Compose
+- Git
+- Ollama installed locally (for development)
+
+## Quick Start with Docker
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/MariahGrey/dockerized-ollama-chat.git
+cd dockerized-ollama-chat
+```
+
+2. Create a `.env` file in the root directory using the example as a template:
+
+```bash
+cp .env.example .env
+```
+
+3. Make sure Ollama is running locally:
+
+```bash
+ollama run llama2
+# or whatever model you prefer to use
+```
+
+4. Start the application using Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
+This will start:
+
+- The Next.js application on port 3000
+- PostgreSQL database on port 5432
+
+5. Access the application at `http://localhost:3000`
+
+## Environment Variables
+
+Required environment variables in your `.env`:
+
+- `NEXTAUTH_URL`: Your application URL (e.g., http://localhost:3000)
+- `NEXTAUTH_SECRET`: Random string for session security
+- `DATABASE_URL`: PostgreSQL connection string
+
+## Database Setup
+
+The database will automatically be initialized when you first run the containers. To manually manage the database:
+
+```bash
+# Run database migrations
+docker-compose exec app npx prisma migrate deploy
+
+# Access Prisma Studio (database GUI)
+npx prisma studio
+```
+
+## Development
+
+For local development:
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Docker Commands
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Common commands you'll need:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `docker-compose up -d`: Start all services in detached mode
+- `docker-compose down`: Stop all services
+- `docker-compose logs -f`: Follow the logs
+- `docker-compose ps`: List running containers
+- `docker-compose up -d --build`: Rebuild and start containers
 
-## Learn More
+## Troubleshooting
 
-To learn more about Next.js, take a look at the following resources:
+1. If the database connection fails:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+# Restart the database container
+docker-compose restart db
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Check database logs
+docker-compose logs db
+```
 
-## Deploy on Vercel
+2. If Ollama isn't responding:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Ensure Ollama is running locally
+- Check if the model is downloaded (`ollama list`)
+- Try restarting the Ollama service
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. If the application isn't responding:
+
+```bash
+# Check application logs
+docker-compose logs app
+```
+
+## Project Structure
+
+.
+├── Dockerfile
+├── docker-compose.yml
+├── prisma/
+│ ├── schema.prisma
+│ └── migrations/
+├── src/
+│ ├── app/
+│ ├── components/
+│ └── lib/
+└── ...
+
+```
+
+```
