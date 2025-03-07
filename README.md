@@ -4,7 +4,7 @@ A Next.js application that provides a chat interface for Ollama language models,
 
 ## Prerequisites
 
-- Docker and Docker Compose
+- Docker and Docker Compose V2
 - Git
 - Ollama installed locally (for development)
 
@@ -33,7 +33,7 @@ ollama run llama2
 4. Start the application using Docker Compose:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will start:
@@ -57,7 +57,7 @@ The database will automatically be initialized when you first run the containers
 
 ```bash
 # Run database migrations
-docker-compose exec app npx prisma migrate deploy
+docker compose exec app npx prisma migrate deploy
 
 # Access Prisma Studio (database GUI)
 npx prisma studio
@@ -83,11 +83,11 @@ npm run dev
 
 Common commands you'll need:
 
-- `docker-compose up -d`: Start all services in detached mode
-- `docker-compose down`: Stop all services
-- `docker-compose logs -f`: Follow the logs
-- `docker-compose ps`: List running containers
-- `docker-compose up -d --build`: Rebuild and start containers
+- `docker compose up -d`: Start all services in detached mode
+- `docker compose down`: Stop all services
+- `docker compose logs -f`: Follow the logs
+- `docker compose ps`: List running containers
+- `docker compose up -d --build`: Rebuild and start containers
 
 ## Troubleshooting
 
@@ -95,10 +95,10 @@ Common commands you'll need:
 
 ```bash
 # Restart the database container
-docker-compose restart db
+docker compose restart db
 
 # Check database logs
-docker-compose logs db
+docker compose logs db
 ```
 
 2. If Ollama isn't responding:
@@ -111,14 +111,14 @@ docker-compose logs db
 
 ```bash
 # Check application logs
-docker-compose logs app
+docker compose logs app
 ```
 
 ## Project Structure
 
 .
 ├── Dockerfile
-├── docker-compose.yml
+├── compose.yaml
 ├── prisma/
 │ ├── schema.prisma
 │ └── migrations/
