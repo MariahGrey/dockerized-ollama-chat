@@ -102,6 +102,59 @@ dockerize-ollama-chat/
 └── ...
 ```
 
+## Database
+
+### Setup
+
+This project uses Prisma with PostgreSQL. The database is automatically configured when running with Docker, but for local development:
+
+1. Make sure PostgreSQL is running locally or update your `.env` file with your database URL:
+
+```bash
+DATABASE_URL="postgresql://user:password@localhost:5432/ollama_chat"
+```
+
+2. Run database migrations:
+
+```bash
+npx prisma migrate dev
+```
+
+3. (Optional) Seed the database:
+
+```bash
+npx prisma db seed
+```
+
+### Database Management
+
+- **Generate Prisma Client**:
+
+```bash
+npx prisma generate
+```
+
+- **Open Prisma Studio** (database GUI):
+
+```bash
+npx prisma studio
+```
+
+- **Reset Database**:
+
+```bash
+npx prisma db reset
+```
+
+### Schema Updates
+
+1. Update the schema in `prisma/schema.prisma`
+2. Create a new migration:
+
+```bash
+npx prisma migrate dev --name your_migration_name
+```
+
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)
