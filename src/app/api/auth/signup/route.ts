@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { withAuthRateLimit } from "@/lib/authRateLimit";
 
 const prisma = new PrismaClient();
 
-export async function POST(request: Request) {
+async function handleSignup(request: NextRequest): Promise<NextResponse> {
   try {
     console.log("Starting signup process...");
     const { name, email, password } = await request.json();
@@ -69,3 +70,5 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export const POST = withAuthRateLimit(handleSignup);

@@ -1,0 +1,25 @@
+# fly.toml app configuration file generated for dockerize-ollama-app on 2025-05-02T11:40:40-07:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'dockerize-ollama-app'
+primary_region = 'sea'
+
+[build]
+
+[deploy]
+  release_command = 'npx prisma migrate deploy && npx prisma generate'
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
